@@ -12,9 +12,27 @@ const Opciones = () => {
    const opcionList:Opcion[] = [
     {
         nombre: 'Alumno',
-        urlImagen: 'https://unsplash.com/es/fotos/t1OalCBUYRc',
+        urlImagen: 'https://unsplash.com/es/fotos/BPHIbMvjhzA',
         descripcion: 'Mantenimiento de Alumno',
         urlOpcion: '/alumno'
+    },
+    {
+        nombre: 'Profesor',
+        urlImagen: 'https://unsplash.com/es/fotos/TVSRWmnW8Us',
+        descripcion: 'Mantenimiento de Profesor',
+        urlOpcion: '/profesor'
+    },
+    {
+        nombre: 'Grado',
+        urlImagen: 'https://unsplash.com/es/fotos/LMQ5W6trE1M',
+        descripcion: 'Mantenimiento de Grado',
+        urlOpcion: '/grado'
+    },
+    {
+        nombre: 'Asignacion Alumno-Grado',
+        urlImagen: 'https://unsplash.com/es/fotos/GugumQBumPY',
+        descripcion: 'Mantenimiento de asignaciones de alumnos.',
+        urlOpcion: '/asignacion'
     }
    ];
    
