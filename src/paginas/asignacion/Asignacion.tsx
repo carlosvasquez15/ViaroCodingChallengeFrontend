@@ -3,7 +3,7 @@ import BackMenu from '../../menu/BackMenu'
 import { GradoType } from '../../models/GradoType';
 import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { Button, Card, CardContent, Container, Grid, Stack, TextField } from '@mui/material';
-import { crearAsignatura, crearGrado, eliminarAsignatura, eliminarGrado, getAlumnos, getGrados, getProfesores, modificarAsignatura, modificarGrado } from '../../services/apiService';
+import { crearAsignatura, crearGrado, eliminarAsignatura, eliminarGrado, getAlumnos, getAsignaturas, getGrados, getProfesores, modificarAsignatura, modificarGrado } from '../../services/apiService';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import { Add, Search } from '@mui/icons-material';
 import TablaDatos from '../base/TablaDatos';
@@ -50,7 +50,7 @@ const Asignacion = () => {
   }
 
   const handleSubmit = (values: AsignaturaType) => {
-    alert(JSON.stringify(values));
+    //alert(JSON.stringify(values));
     if (modificando) {
       modificarAsignatura(values)
         .then((asignaturaModificada) => {
@@ -75,7 +75,7 @@ const Asignacion = () => {
 
   const handleSelect = (event: React.MouseEvent, cellValues: GridRenderCellParams) => {
     const asignaturaSeleccionada: AsignaturaType = { ...cellValues.row };
-    alert(JSON.stringify(asignaturaSeleccionada));
+    //alert(JSON.stringify(asignaturaSeleccionada));
     setAsignatura(asignaturaSeleccionada);
     setModificando(true);
     handleOpen();
@@ -109,6 +109,10 @@ const Asignacion = () => {
     getAlumnos()
     .then((datos) => {setAlumnosList(datos);})
     .catch((error) => console.log('Hubo un error: ', error));
+
+    getAsignaturas()
+    .then((datos) => {setAsignaturaList(datos);  console.log(datos)})
+    .catch((error) => console.log('Hubo un error: ', error));
   }, []);
 
   return (
@@ -116,12 +120,12 @@ const Asignacion = () => {
       <Container sx={{ py: 1 }} maxWidth="lg">
         <Card sx={{ p: 2 }} >
           <CardContent>
-            <BackMenu titulo='Grados' />
+            <BackMenu titulo='Asignaturas' />
             <Grid minHeight={300} mt={2}>
               <Stack alignItems="center" direction="row" sx={{ pt: 2, pb: 2 }}>
                 <Grid2 container spacing={3} md={12}>
                   <Grid2 xs={12} md={6} >
-                    <TextField label="Ingrese cualquier valor" value={textoBusqueda} onChange={(event) => (setTextoBusqueda(event.target.value))} color='info' size='small' fullWidth />
+                    <TextField label="Ingrese nombre" value={textoBusqueda} onChange={(event) => (setTextoBusqueda(event.target.value))} color='info' size='small' fullWidth />
                   </Grid2>
                   <Grid2 xs={12} md={3} >
                     <Button size="medium" color='info' variant='contained' startIcon={<Search />}>Buscar</Button>
@@ -130,7 +134,7 @@ const Asignacion = () => {
               </Stack>
 
               <Stack direction={"row-reverse"}>
-                <Button variant='contained' size='medium' color='info' endIcon={<Add />} onClick={handleNuevoGrado} >Registrar nuevo Grado</Button>
+                <Button variant='contained' size='medium' color='info' endIcon={<Add />} onClick={handleNuevoGrado} >Registrar Nueva Asignatura</Button>
               </Stack>
               <Grid2 sx={{ mt: 2 }} >
                 <TablaDatos columnas={columnasDataTable} filas={asignaturaList} />
