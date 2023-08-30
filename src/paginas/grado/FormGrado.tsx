@@ -38,9 +38,6 @@ const FormAlumno: React.FC<FormGradoProps> = ({modificando, profesoresList}) => 
                 name="profesorId"
                 label="Profesor"
                 select
-                onChange={(event: any) => {
-                    formik.setFieldValue('profesor', event.target.value);
-                }}
                 placeholder='Seleccione un profesor...'
                 >
                     {profesoresList.map((profesor) => (

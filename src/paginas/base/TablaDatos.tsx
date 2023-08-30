@@ -1,4 +1,4 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef,GridToolbar } from '@mui/x-data-grid';
 import React from 'react';
 
 interface TablaDatosProps{
@@ -21,7 +21,13 @@ const TablaDatos: React.FC<TablaDatosProps> = ({columnas, filas, handleDelete, h
             },
           }}
           pageSizeOptions={[10, 20, 50]}
-          onRowClick={handleSelect} />
+          onRowClick={handleSelect}
+          slots={{ toolbar: GridToolbar }} 
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+            },
+          }}/>
     </>
     
 

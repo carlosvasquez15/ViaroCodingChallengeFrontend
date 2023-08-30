@@ -106,13 +106,16 @@ const Alumno = () => {
     handleOpen();
   }
 
-  useEffect(() => {
+  function buscar(){
     getAlumnos()
     .then((datos) => setAlumnosList(datos))
     .catch((error) => console.log('Hubo un error: ', error));
+  }
+
+  useEffect(() => {
+    buscar();
   }, []);
   
-
   return (
     <>
       <Container sx={{ py: 1 }} maxWidth="lg">
@@ -123,10 +126,10 @@ const Alumno = () => {
               <Stack alignItems="center" direction="row" sx={{ pt: 2, pb: 2 }}>
                 <Grid2 container spacing={3} md={12}>
                   <Grid2 xs={12} md={6} >
-                    <TextField label="Ingrese cualquier valor" value={textoBusqueda} onChange={(event) => (setTextoBusqueda(event.target.value))} color='info' size='small' fullWidth />
+                    <TextField label="Ingrese nombre" value={textoBusqueda} onChange={(event) => (setTextoBusqueda(event.target.value))} color='info' size='small' fullWidth />
                   </Grid2>
                   <Grid2 xs={12} md={3} >
-                    <Button size="medium" color='info' variant='contained' startIcon={<Search />}>Buscar</Button>
+                    <Button size="medium" color='info' variant='contained' startIcon={<Search />} onClick={buscar} >Buscar</Button>
                   </Grid2>
                 </Grid2>
               </Stack>

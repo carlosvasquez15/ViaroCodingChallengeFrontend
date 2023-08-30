@@ -47,7 +47,7 @@ const Grado = () => {
   }
 
   const handleSubmit = (values: GradoType) => {
-    alert(JSON.stringify(values));
+    //alert(JSON.stringify(values));
     if (modificando) {
       modificarGrado(values)
         .then((gradoModificado) => {
@@ -72,7 +72,7 @@ const Grado = () => {
 
   const handleSelect = (event: React.MouseEvent, cellValues: GridRenderCellParams) => {
     const gradoSeleccionado: GradoType = { ...cellValues.row };
-    alert(JSON.stringify(gradoSeleccionado));
+    //alert(JSON.stringify(gradoSeleccionado));
     setGrado(gradoSeleccionado);
     setModificando(true);
     handleOpen();

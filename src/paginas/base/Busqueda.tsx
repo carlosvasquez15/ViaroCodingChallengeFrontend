@@ -8,7 +8,7 @@ interface BusquedaProps {
     textoBusqueda?: string;
 }
 
-const Busqueda: React.FC<BusquedaProps> = ({textoBusqueda = 'Buscar por cualquier campo'}) => {
+const Busqueda: React.FC<BusquedaProps> = ({textoBusqueda = 'Buscar por nombre'}) => {
   return (
     <>
        
