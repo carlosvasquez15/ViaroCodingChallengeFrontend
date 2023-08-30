@@ -20,7 +20,8 @@ const TablaDatos: React.FC<TablaDatosProps> = ({columnas, filas, handleDelete, h
               paginationModel: { page: 0, pageSize: 10 },
             },
           }}
-          pageSizeOptions={[10, 20, 50]} />
+          pageSizeOptions={[10, 20, 50]}
+          onRowClick={handleSelect} />
     </>
     
 

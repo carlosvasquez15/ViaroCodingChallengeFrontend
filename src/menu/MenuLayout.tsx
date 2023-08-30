@@ -1,8 +1,6 @@
 import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Grid, Stack, Toolbar, Typography } from '@mui/material';
-import React, { FC, ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
-import { Route } from 'react-router-dom';
-import Alumno from '../paginas/alumno/Alumno';
 
 interface LayoutProps {
     children: ReactNode;

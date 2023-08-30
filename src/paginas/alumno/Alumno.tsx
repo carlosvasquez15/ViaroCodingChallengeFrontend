@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BackMenu from '../../menu/BackMenu'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import { Box, Button, Card, CardContent, TextField, Typography } from '@mui/material';
+import { Button, Card, CardContent, TextField } from '@mui/material';
 import { Add, Search } from '@mui/icons-material';
 import TablaDatos from '../base/TablaDatos';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import Busqueda from '../base/Busqueda';
 import ModalABC from '../base/ModalABC';
 import { AlumnoType } from '../../models/Alumno.type';
 import FormAlumno from './FormAlumno';
+import { crearAlumno, eliminarAlumno, getAlumnos, modificarAlumno } from '../../services/apiService';
 
 const Alumno = () => {
   const [modalAbierto, setModalAbierto] = useState(false);
@@ -23,14 +22,21 @@ const Alumno = () => {
   const [alumno, setAlumno] = useState<AlumnoType>(defaultValuesAlumno);
 
   const columnasDataTable: GridColDef[] = [
-    { field: 'id', headerName: 'ID Alumno', width: 100 },
-    { field: 'nombre', headerName: 'Nombres', width: 150 },
-    { field: 'apellido', headerName: 'Apellidos', width: 150 },
+    { field: 'id', headerName: 'ID Alumno', width: 150 },
+    { field: 'nombre', headerName: 'Nombres', width: 200 },
+    { field: 'apellido', headerName: 'Apellidos', width: 200 },
     { field: 'genero', headerName: 'Genero', width: 150 },
     { field: 'fechaNacimiento', headerName: 'Fecha Nacimiento', width: 150 },
-    { field: '', headerName: 'Acciones', width: 100 },
+    { field: '', headerName: 'Acciones', width: 250, 
+      renderCell: (cellValues: GridRenderCellParams) => { 
+      return (
+        <>
+        <Button color='success' sx={{m:2}} variant='contained' onClick={(event) => { handleSelect(event, cellValues) }}>Ver</Button>
+        <Button color='error' variant='contained' onClick={(event) => { handleDelete(event, cellValues) }}>Eliminar</Button>
+        </>
+      ) }  
+  },
   ];
-
 
   const handleOpen =() =>{
     setModalAbierto(true);
@@ -38,10 +44,56 @@ const Alumno = () => {
 
   const handleClose = () => {
     setModalAbierto(false);
+    resetValues();
   }
 
-  const handleSubmit = (values: any) => {
-    alert(JSON.stringify(values));
+  const handleSubmit = (values: AlumnoType) => {
+    if(modificando){
+      modificarAlumno(values)
+      .then((alumnoModificado) =>{
+        const listaActualizada = alumnosList.map(item =>
+          item.id === alumnoModificado.id ? alumnoModificado : item);
+          setAlumnosList(listaActualizada);
+      })
+      .catch((error) =>{
+        console.log("Ocurrio un error: ", error);
+      });
+      //alert(JSON.stringify(alumno));
+    }else{
+      crearAlumno(values)
+      .then((alumnoCreado) => {
+        setAlumnosList((alumnosList) => ([...alumnosList,alumnoCreado]));
+      })
+      .catch((error) =>{
+        console.log("Ocurrio un error: ", error);
+      })
+      //alert(JSON.stringify(values));
+    }
+    handleClose();
+  }
+
+  const handleSelect = (event: React.MouseEvent, cellValues: GridRenderCellParams) =>{
+    const alumnoSeleccionado: AlumnoType = {...cellValues.row};
+    alert(JSON.stringify(alumnoSeleccionado));
+    setAlumno(alumnoSeleccionado);
+    setModificando(true);
+    handleOpen();
+  }
+
+  const handleDelete = (event: React.MouseEvent, cellValues: GridRenderCellParams) =>{
+    const alumnoSeleccionado: AlumnoType = {...cellValues.row};
+    eliminarAlumno(alumnoSeleccionado)
+    .then(() => {
+      setAlumnosList(alumnosList.filter(item => item.id !== alumnoSeleccionado.id));
+
+    }).catch((error) =>{
+      console.log("Ocurrio un error: ", error);
+    });
+    //alert(JSON.stringify(alumnosList.length));
+  }
+
+  const handleConfirmDelete = () =>{
+    
   }
 
   const resetValues=()=>{
@@ -54,13 +106,20 @@ const Alumno = () => {
     handleOpen();
   }
 
+  useEffect(() => {
+    getAlumnos()
+    .then((datos) => setAlumnosList(datos))
+    .catch((error) => console.log('Hubo un error: ', error));
+  }, []);
+  
+
   return (
     <>
       <Container sx={{ py: 1 }} maxWidth="lg">
         <Card sx={{ p: 2 }} >
           <CardContent>
             <BackMenu titulo='Alumnos' />
-            <Grid spacing={4} minHeight={300} mt={2}>
+            <Grid minHeight={300} mt={2}>
               <Stack alignItems="center" direction="row" sx={{ pt: 2, pb: 2 }}>
                 <Grid2 container spacing={3} md={12}>
                   <Grid2 xs={12} md={6} >
@@ -78,8 +137,8 @@ const Alumno = () => {
               </Stack>
               <Grid2 sx={{ mt: 2 }} >
                 <TablaDatos columnas={columnasDataTable} filas={alumnosList} />
-                <ModalABC open={modalAbierto}  title='Alumno' onClose={handleClose} modificando={modificando}>
-                  <FormAlumno alumno={alumno} modificando={modificando} handleSubmit={handleSubmit}/>
+                <ModalABC open={modalAbierto} entidad={alumno}  title='Alumno' onClose={handleClose} onSubmit={handleSubmit} modificando={modificando}>
+                  <FormAlumno modificando={modificando} />
                 </ModalABC>
               </Grid2>
             </Grid>
