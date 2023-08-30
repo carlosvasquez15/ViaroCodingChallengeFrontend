@@ -1,6 +1,8 @@
 import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Container, CssBaseline, Grid, Stack, Toolbar, Typography } from '@mui/material';
 import React, { FC, ReactNode } from 'react';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
+import { Route } from 'react-router-dom';
+import Alumno from '../paginas/alumno/Alumno';
 
 interface LayoutProps {
     children: ReactNode;
@@ -11,8 +13,8 @@ const MenuLayout: FC<LayoutProps> = (props) => {
  
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <AppBar position="relative">
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '50vh', backgroundColor: '#F4F4F6' }}>
+      <AppBar position="fixed">
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
@@ -25,24 +27,21 @@ const MenuLayout: FC<LayoutProps> = (props) => {
       </AppBar>
 
       <Box sx={{ flexGrow: 1 }}>
-        <Container component="main" maxWidth="md" sx={{mt:5}}>
+        <Container component="main" maxWidth="lg" sx={{mt:12}}>
           <Typography component="h1" variant="h2" align="center" color="text.primary" gutterBottom>
            Mantenimiento de Escuela
           </Typography>
           <Typography variant="h5" align="center" color="text.secondary" paragraph>
-            Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don&apos;t simply skip over it entirely.
+            Bienvenido al portal de la Escuela, aquí podrás administrar los profesores, alumnos, grados y asignaturas de estudiantes. Puedes seleccionar la opción que necesites.
           </Typography>
-          <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-            <Button variant="contained">Main call to action</Button>
-            <Button variant="outlined">Secondary action</Button>
-          </Stack>
         </Container>
       </Box>
 
-      <Container sx={{ py: 8 }} maxWidth="md">
+      <Container component="main" sx={{ py: 8, }} maxWidth="lg">
         <Grid container spacing={4}>
           {children}  
         </Grid>
+       
       </Container>
 
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
