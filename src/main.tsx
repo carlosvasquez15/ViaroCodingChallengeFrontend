@@ -7,6 +7,7 @@ import { CssBaseline } from '@mui/material'
 import { BrowserRouter } from 'react-router-dom'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Toaster } from 'react-hot-toast'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -14,9 +15,10 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <ThemeProvider theme={theme}>
           <CssBaseline/>
+          <Toaster position='top-right'/>
           <App />
       </ThemeProvider>
       </LocalizationProvider>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 )

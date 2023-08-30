@@ -2,6 +2,7 @@ import { AppBar, Box, Button, Card, CardActions, CardContent, CardMedia, Contain
 import { FC, ReactNode } from 'react';
 import CameraIcon from '@mui/icons-material/PhotoCamera';
 
+
 interface LayoutProps {
     children: ReactNode;
 }

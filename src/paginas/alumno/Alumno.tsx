@@ -91,10 +91,10 @@ const Alumno = () => {
     });
     //alert(JSON.stringify(alumnosList.length));
   }
-
+/*
   const handleConfirmDelete = () =>{
     
-  }
+  }*/
 
   const resetValues=()=>{
     setAlumno(defaultValuesAlumno);
@@ -128,7 +128,6 @@ const Alumno = () => {
                   <Grid2 xs={12} md={3} >
                     <Button size="medium" color='info' variant='contained' startIcon={<Search />}>Buscar</Button>
                   </Grid2>
-
                 </Grid2>
               </Stack>
 

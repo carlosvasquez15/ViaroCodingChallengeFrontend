@@ -1,11 +1,14 @@
-import { Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, DialogActions, DialogContent, DialogTitle, Divider, Typography } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { AlumnoType } from '../../models/Alumno.type';
+import { ProfesorType } from '../../models/ProfesorType';
+import { GradoType } from '../../models/GradoType';
+import { AsignaturaType } from '../../models/AsignaturaType';
 
 interface ModalABCProps {
-    entidad: AlumnoType;
+    entidad: AlumnoType | ProfesorType | GradoType | AsignaturaType;
     modificando: boolean;
     open: boolean;
     onClose: () => void;
@@ -18,7 +21,9 @@ const ModalABC: React.FC<ModalABCProps> = ({ open, onClose, entidad, onSubmit, t
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>
+                <Typography align='center' variant='h5' sx={{mt:2}}>
                 {title}
+                </Typography>
             </DialogTitle>
 
             <Formik
@@ -30,6 +35,7 @@ const ModalABC: React.FC<ModalABCProps> = ({ open, onClose, entidad, onSubmit, t
                         <DialogContent>
                             {children}
                         </DialogContent>
+                        <Divider orientation='horizontal' />
                         <DialogActions>
                             <Button color='error' variant='text' onClick={onClose}> {modificando ? 'Cancelar' : 'Cerrar'} </Button>
                             <Button color='success' variant='contained' type='submit'>{modificando ? 'Guardad cambios' : 'Agregar'}</Button>

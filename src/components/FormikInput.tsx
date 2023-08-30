@@ -7,6 +7,13 @@ import React from 'react';
 const FormikInput:React.FC<FieldHookConfig<string>&TextFieldProps> = (props) => {
    const [field, meta] = useField(props.name); 
    const valorInicial = field.value || '';
+   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      field.onChange(event);
+      if (props.onChange) {
+        props.onChange(event);
+      }
+    };
+
   return (
     <>
     <TextField
@@ -16,7 +23,7 @@ const FormikInput:React.FC<FieldHookConfig<string>&TextFieldProps> = (props) => 
         fullWidth
         name={field.name}
         onBlur={field.onBlur}
-        onChange={field.onChange}
+        onChange={handleInputChange}
         value={valorInicial}
         helperText={meta.touched && meta.error}
         error={meta.touched && Boolean(meta.error)}
